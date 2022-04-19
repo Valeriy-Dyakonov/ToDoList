@@ -35,4 +35,10 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteHolder>() {
         noteList.add(note)
         notifyDataSetChanged()
     }
+
+    fun initNotes(notes: ArrayList<Note>) {
+        noteList.clear()
+        noteList.addAll(notes)
+        notifyDataSetChanged()
+    }
 }
