@@ -1,4 +1,4 @@
-package com.example.myapplication.mainFragment
+package com.example.myapplication.fragments.mainFragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,16 +7,16 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.myapplication.R
 
-class ProfileFragment : Fragment() {
+class MapFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+        return inflater.inflate(R.layout.fragment_map, container, false)
     }
 
     companion object {
         @JvmStatic
-        fun newInstance() = ProfileFragment()
+        fun newInstance() = MapFragment()
     }
 }
