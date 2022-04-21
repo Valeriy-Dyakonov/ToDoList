@@ -8,14 +8,22 @@ import android.view.ViewGroup
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.myapplication.R
 import com.example.myapplication.adapter.NoteAdapter
 import com.example.myapplication.api.NotesService
 import com.example.myapplication.api.retrofit.RestApiClient
 import com.example.myapplication.databinding.FragmentNotesListBinding
+import com.example.myapplication.enums.DaysCategory
 import com.example.myapplication.model.Note
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.time.Duration
+import java.time.LocalDateTime
+import java.util.*
+import java.util.concurrent.TimeUnit
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class NotesListFragment : Fragment() {
     private lateinit var binding: FragmentNotesListBinding
@@ -43,6 +51,12 @@ class NotesListFragment : Fragment() {
             topAppBar.setOnClickListener {
                 drawerLayout.openDrawer(GravityCompat.START);
             }
+            navigationView.setNavigationItemSelectedListener {
+                adapter.category = DaysCategory.valueOf((it.title as String).uppercase())
+                adapter.updateNotesByCategory()
+                drawerLayout.closeDrawers()
+                true
+            }
         }
     }
 
@@ -61,7 +75,8 @@ class NotesListFragment : Fragment() {
                 call: Call<ArrayList<Note>>,
                 response: Response<ArrayList<Note>>
             ) {
-                adapter.initNotes(response.body() as ArrayList<Note>)
+                val notes = response.body() as ArrayList<Note>
+                adapter.initNotes(notes)
             }
         })
     }

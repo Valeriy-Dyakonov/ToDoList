@@ -6,18 +6,25 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.databinding.NoteItemBinding
+import com.example.myapplication.enums.DaysCategory
 import com.example.myapplication.model.Note
+import java.util.*
+import java.util.concurrent.TimeUnit
+import kotlin.collections.ArrayList
 
 class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteHolder>() {
+    val allNoteList = ArrayList<Note>()
     val noteList = ArrayList<Note>()
+    var category: DaysCategory = DaysCategory.TODAY
 
     class NoteHolder(item: View) : RecyclerView.ViewHolder(item) {
         var binding = NoteItemBinding.bind(item)
         fun bind(note: Note) {
-            binding.noteTitle.text = note.name
-            binding.noteDate.text = note.date.toString()
-            binding.noteContent.text = note.content
             binding.apply {
+                noteTitle.text = note.name
+                noteDate.text = note.date.toString()
+                noteContent.text = note.content
+
                 card.setOnLongClickListener {
                     deleteCardButton.visibility =
                         if (deleteCardButton.visibility == View.VISIBLE) View.GONE else View.VISIBLE
@@ -40,14 +47,33 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteHolder>() {
         return noteList.size
     }
 
-    fun addNote(note: Note) {
-        noteList.add(note)
+    fun initNotes(notes: ArrayList<Note>) {
+        noteList.clear()
+        allNoteList.clear()
+        allNoteList.addAll(notes)
+        noteList.addAll(getByCategory())
         notifyDataSetChanged()
     }
 
-    fun initNotes(notes: ArrayList<Note>) {
+    fun updateNotesByCategory() {
         noteList.clear()
-        noteList.addAll(notes)
+        noteList.addAll(getByCategory())
         notifyDataSetChanged()
+    }
+
+    private fun getByCategory(): List<Note> {
+        val date = Date()
+        return when (category) {
+            DaysCategory.OVERDUE -> allNoteList.filter { getDiff(date, it.date) < 0 }
+            DaysCategory.TODAY -> allNoteList.filter { getDiff(date, it.date) == 0L }
+            DaysCategory.TOMORROW -> allNoteList.filter { getDiff(date, it.date) == 1L }
+            DaysCategory.WEEK -> allNoteList.filter { getDiff(date, it.date) in 2..7L }
+            DaysCategory.MONTH -> allNoteList.filter { getDiff(date, it.date) in 8..31L }
+            DaysCategory.FUTURE -> allNoteList.filter { getDiff(date, it.date) > 31L }
+        }
+    }
+
+    private fun getDiff(time1: Date, time2: Date): Long {
+        return TimeUnit.DAYS.convert(time2.time - time1.time, TimeUnit.MILLISECONDS)
     }
 }

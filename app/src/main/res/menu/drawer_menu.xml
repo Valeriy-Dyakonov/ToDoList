@@ -5,17 +5,26 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/subtitle1"
-            android:title="Subtitle 1">
+            android:title="@string/menu_title_1">
             <menu>
                 <item
                     android:id="@+id/item1"
-                    android:title="Item 1" />
+                    android:title="@string/overdue" />
                 <item
                     android:id="@+id/item2"
-                    android:title="Item 2" />
+                    android:title="@string/today" />
                 <item
                     android:id="@+id/item3"
-                    android:title="Item 3" />
+                    android:title="@string/tomorrow" />
+                <item
+                    android:id="@+id/item4"
+                    android:title="@string/week" />
+                <item
+                    android:id="@+id/item5"
+                    android:title="@string/month" />
+                <item
+                    android:id="@+id/item6"
+                    android:title="@string/month_later" />
             </menu>
         </item>
     </group>
@@ -28,11 +37,11 @@
             android:title="Subtitle 2">
             <menu>
                 <item
-                    android:id="@+id/item4"
+                    android:id="@+id/item7"
                     android:title="Item 4" />
 
                 <item
-                    android:id="@+id/item5"
+                    android:id="@+id/item8"
                     android:title="Item 5" />
 
             </menu>
