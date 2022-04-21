@@ -1,5 +1,6 @@
 package com.example.myapplication.activities
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -36,6 +37,10 @@ class LoginActivity : AppCompatActivity() {
                 LoginFragment.newInstance(),
                 it
             )
+        }
+        formModel.loginForm.observe(this) {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
         }
     }
 

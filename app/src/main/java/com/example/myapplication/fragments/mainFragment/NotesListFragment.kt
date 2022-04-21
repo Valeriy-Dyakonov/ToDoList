@@ -1,9 +1,11 @@
 package com.example.myapplication.fragments.mainFragment
 
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.adapter.NoteAdapter
@@ -27,12 +29,21 @@ class NotesListFragment : Fragment() {
         binding = FragmentNotesListBinding.inflate(inflater)
         notesService = RestApiClient.notesService
         initRecyclerView()
+        initListeners()
         return binding.root
     }
 
     companion object {
         @JvmStatic
         fun newInstance() = NotesListFragment()
+    }
+
+    private fun initListeners() {
+        binding.apply {
+            topAppBar.setOnClickListener {
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+        }
     }
 
     private fun initRecyclerView() {

@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.myapplication.databinding.FragmentLoginBinding
 import com.example.myapplication.model.FormModel
+import com.example.myapplication.model.LoginModel
 
 class LoginFragment : Fragment() {
     private val formModel: FormModel by activityViewModels()
@@ -25,6 +26,10 @@ class LoginFragment : Fragment() {
     private fun initListeners() {
         binding.toRegisterButton.setOnClickListener {
             formModel.toRegisterClicked.value = true
+        }
+
+        binding.loginButton.setOnClickListener {
+            formModel.loginForm.value = LoginModel("login", "password")
         }
     }
 

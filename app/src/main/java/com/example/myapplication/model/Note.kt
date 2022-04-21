@@ -1,4 +1,6 @@
 package com.example.myapplication.model
 
-class Note(val name: String) {
+import java.util.*
+
+class Note(val name: String, val date: Date, val content: String) {
 }

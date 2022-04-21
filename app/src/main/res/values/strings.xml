@@ -21,4 +21,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="Login_form_subtitle">Time is money</string>
+    <string name="add_note">add_note</string>
+    <string name="top_app_bar_title">Notes</string>
+    <string name="important_card">Important_card</string>
+    <string name="edit_card">Edit_card</string>
+    <string name="delete_card">Delete_card</string>
 </resources>

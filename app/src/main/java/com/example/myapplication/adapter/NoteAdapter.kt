@@ -14,7 +14,16 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteHolder>() {
     class NoteHolder(item: View) : RecyclerView.ViewHolder(item) {
         var binding = NoteItemBinding.bind(item)
         fun bind(note: Note) {
-            binding.noteTextView.text = note.name
+            binding.noteTitle.text = note.name
+            binding.noteDate.text = note.date.toString()
+            binding.noteContent.text = note.content
+            binding.apply {
+                card.setOnLongClickListener {
+                    deleteCardButton.visibility =
+                        if (deleteCardButton.visibility == View.VISIBLE) View.GONE else View.VISIBLE
+                    true
+                }
+            }
         }
     }
 

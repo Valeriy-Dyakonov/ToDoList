@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.myapplication.R
 import com.example.myapplication.databinding.ActivityMainBinding
-import com.example.myapplication.fragments.mainFragment.CalendarFragment
 import com.example.myapplication.fragments.mainFragment.MapFragment
 import com.example.myapplication.fragments.mainFragment.NotesListFragment
 import com.example.myapplication.fragments.mainFragment.ProfileFragment
@@ -27,7 +26,6 @@ class MainActivity : AppCompatActivity() {
         bNav.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.notes -> setFragment(R.id.mainFragmentLayout, NotesListFragment.newInstance())
-                R.id.calendar -> setFragment(R.id.mainFragmentLayout, CalendarFragment.newInstance())
                 R.id.map -> setFragment(R.id.mainFragmentLayout, MapFragment.newInstance())
                 R.id.profile -> setFragment(R.id.mainFragmentLayout, ProfileFragment.newInstance())
             }
