@@ -52,7 +52,7 @@ class NotesListFragment : Fragment() {
                 drawerLayout.openDrawer(GravityCompat.START);
             }
             navigationView.setNavigationItemSelectedListener {
-                adapter.category = DaysCategory.valueOf((it.title as String).uppercase())
+                adapter.category = DaysCategory.getByNumber(it.order)!!
                 adapter.updateNotesByCategory()
                 drawerLayout.closeDrawers()
                 true

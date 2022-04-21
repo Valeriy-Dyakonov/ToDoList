@@ -13,9 +13,9 @@ import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 
 class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteHolder>() {
-    val allNoteList = ArrayList<Note>()
-    val noteList = ArrayList<Note>()
-    var category: DaysCategory = DaysCategory.TODAY
+    private val allNoteList = ArrayList<Note>()
+    private val noteList = ArrayList<Note>()
+    var category: DaysCategory? = DaysCategory.TODAY
 
     class NoteHolder(item: View) : RecyclerView.ViewHolder(item) {
         var binding = NoteItemBinding.bind(item)
@@ -70,6 +70,7 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteHolder>() {
             DaysCategory.WEEK -> allNoteList.filter { getDiff(date, it.date) in 2..7L }
             DaysCategory.MONTH -> allNoteList.filter { getDiff(date, it.date) in 8..31L }
             DaysCategory.FUTURE -> allNoteList.filter { getDiff(date, it.date) > 31L }
+            null -> allNoteList
         }
     }
 

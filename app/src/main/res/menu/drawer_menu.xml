@@ -9,22 +9,28 @@
             <menu>
                 <item
                     android:id="@+id/item1"
-                    android:title="@string/overdue" />
+                    android:title="@string/overdue"
+                    android:orderInCategory="1"/>
                 <item
                     android:id="@+id/item2"
-                    android:title="@string/today" />
+                    android:title="@string/today"
+                    android:orderInCategory="2"/>
                 <item
                     android:id="@+id/item3"
-                    android:title="@string/tomorrow" />
+                    android:title="@string/tomorrow"
+                    android:orderInCategory="3"/>
                 <item
                     android:id="@+id/item4"
-                    android:title="@string/week" />
+                    android:title="@string/week"
+                    android:orderInCategory="4"/>
                 <item
                     android:id="@+id/item5"
-                    android:title="@string/month" />
+                    android:title="@string/month"
+                    android:orderInCategory="5"/>
                 <item
                     android:id="@+id/item6"
-                    android:title="@string/month_later" />
+                    android:title="@string/future"
+                    android:orderInCategory="6"/>
             </menu>
         </item>
     </group>
@@ -38,11 +44,13 @@
             <menu>
                 <item
                     android:id="@+id/item7"
-                    android:title="Item 4" />
+                    android:title="Item 4"
+                    android:orderInCategory="7"/>
 
                 <item
                     android:id="@+id/item8"
-                    android:title="Item 5" />
+                    android:title="Item 5"
+                    android:orderInCategory="8"/>
 
             </menu>
         </item>

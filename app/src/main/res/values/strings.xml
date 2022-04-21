@@ -29,9 +29,9 @@
 
     <string name="menu_title_1">Sort by</string>
     <string name="overdue">Overdue</string>
-    <string name="today">Today</string>
-    <string name="tomorrow">Tomorrow</string>
+    <string name="today">Next 24 Hours</string>
+    <string name="tomorrow">Coming days</string>
     <string name="week">Week</string>
     <string name="month">Month</string>
-    <string name="month_later">Future</string>
+    <string name="future">Future</string>
 </resources>
