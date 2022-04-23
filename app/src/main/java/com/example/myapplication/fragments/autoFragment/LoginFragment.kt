@@ -29,8 +29,24 @@ class LoginFragment : Fragment() {
         }
 
         binding.loginButton.setOnClickListener {
-            formModel.loginForm.value = LoginModel("login", "password")
+            if (canSignIn()) {
+                formModel.loginForm.value = LoginModel(binding.login.text.toString(), binding.password.text.toString())
+            }
         }
+    }
+
+    private fun canSignIn(): Boolean {
+        binding.apply {
+            if (login.text.toString().isEmpty()) {
+                login.error = "Required"
+            }
+            if (password.text.toString().isEmpty()) {
+                password.error = "Required"
+            }
+        }
+
+        return binding.password.error == null &&
+                binding.login.error == null
     }
 
     companion object {
