@@ -6,13 +6,13 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.widget.addTextChangedListener
 import com.example.myapplication.R
 import com.example.myapplication.databinding.ActivityEditBinding
 import com.example.myapplication.enums.OperationType
 import com.example.myapplication.model.Note
 import com.example.myapplication.utils.DateUtils
+import com.example.myapplication.utils.LocaleUtils
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.MaterialTimePicker.INPUT_MODE_KEYBOARD
@@ -30,6 +30,7 @@ class EditActivity : AppCompatActivity() {
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        LocaleUtils.setAppLocale(this)
         binding = ActivityEditBinding.inflate(layoutInflater)
         initData()
         initPickers()
@@ -50,7 +51,7 @@ class EditActivity : AppCompatActivity() {
                 )
                 val addNote = Intent().apply {
                     putExtra("note", note)
-                    putExtra("type",type.toString())
+                    putExtra("type", type.toString())
                 }
                 setResult(RESULT_OK, addNote)
                 finish()

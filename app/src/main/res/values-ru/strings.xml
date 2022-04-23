@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Органайзер</string>
+    <string name="notes">Задания</string>
+    <string name="map">Карта</string>
+    <string name="settings">Настройки</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="notes_list_fragment">Notes List fragment</string>
+    <string name="calendar_fragment">Calendar fragment</string>
+    <string name="map_fragment">Map fragment</string>
+    <string name="profile_fragment">Profile fragment</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="welcome">Привет</string>
+    <string name="Login_form_subtitle">Время - деньги</string>
+    <string name="login_form">Войти</string>
+    <string name="register_button">Регистрация</string>
+    <string name="login_hint">Логин</string>
+    <string name="password_hint">Пароль</string>
+    <string name="repeat_password_hint">Повтор пароля</string>
+    <string name="background">background</string>
+    <string name="login_form_button">Войти</string>
+    <!-- TODO: Remove or change this placeholder text -->
+
+    <string name="add_note">add_note</string>
+    <string name="top_app_bar_title">Задания</string>
+    <string name="top_app_bar_settings_title">Настройки</string>
+    <string name="important_card">Important_card</string>
+    <string name="edit_card">Edit_card</string>
+    <string name="delete_card">Delete_card</string>
+    <string name="logout">Выйти</string>
+    <string name="localization">Локализация</string>
+
+    <string name="drawer_menu_title_time">Показать за Период</string>
+    <string name="drawer_menu_title_category">Показать по Категории</string>
+    <string name="overdue">Просроченные</string>
+    <string name="today">Следующие 24 часа</string>
+    <string name="tomorrow">Грядущие дни</string>
+    <string name="week">Неделя</string>
+    <string name="month">Месяц</string>
+    <string name="future">В будущем</string>
+    <string name="map_view">Map</string>
+
+    <string name="create_title">Создать задание</string>
+    <string name="name_hint">Название</string>
+    <string name="category_hint">Категория</string>
+    <string name="date_hint">DD/MM/YYYY</string>
+    <string name="time_hint">HH:mm</string>
+    <string name="content_hint">Описание</string>
+
+    <string name="save_button">Сохранить</string>
+
+    <string name="russian">Русский</string>
+    <string name="english">Английский</string>
+</resources>

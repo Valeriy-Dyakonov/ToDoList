@@ -8,12 +8,14 @@ import com.example.myapplication.databinding.ActivityMainBinding
 import com.example.myapplication.fragments.mainFragment.MapFragment
 import com.example.myapplication.fragments.mainFragment.NotesListFragment
 import com.example.myapplication.fragments.mainFragment.SettingsFragment
+import com.example.myapplication.utils.LocaleUtils
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        LocaleUtils.setAppLocale(this)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initBottomNav()

@@ -17,6 +17,7 @@ import com.example.myapplication.fragments.autoFragment.RegisterFragment
 import com.example.myapplication.model.AuthRequest
 import com.example.myapplication.model.AuthResponse
 import com.example.myapplication.model.FormModel
+import com.example.myapplication.utils.LocaleUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -30,6 +31,7 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        LocaleUtils.setAppLocale(this)
         authService = RestApiClient.getAuthService(this)
         accessService = RestApiClient.getAccessService(this)
         binding = ActivityLoginBinding.inflate(layoutInflater)

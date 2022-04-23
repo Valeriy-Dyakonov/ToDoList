@@ -74,7 +74,6 @@ class NotesListFragment : Fragment(), NoteClickListener {
 
     private fun initLauncherAndAdapter() {
         adapter = NoteAdapter(this, dbManager)
-        updateAppBarTitle(adapter.timePeriod.getLabel())
         dbManager.openDb()
         adapter.initNotes(dbManager.readAll)
         editLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -109,11 +108,9 @@ class NotesListFragment : Fragment(), NoteClickListener {
                 if (it.order > navigationView.menu[0].subMenu.size()) {
                     adapter.category = it.title.toString()
                     adapter.updateNotesByCategory()
-                    updateAppBarTitle(it.title.toString())
                 } else {
                     adapter.timePeriod = DaysCategory.getByNumber(it.order)!!
                     adapter.updateNotesByTimePeriod()
-                    updateAppBarTitle(adapter.timePeriod.getLabel())
                 }
                 drawerLayout.closeDrawers()
                 true
@@ -132,10 +129,6 @@ class NotesListFragment : Fragment(), NoteClickListener {
                 }
             }
         }
-    }
-
-    private fun updateAppBarTitle(prefix: String) {
-        binding.topAppBar.title = "$prefix Tasks"
     }
 
     private fun updateDrawerMenu() {
