@@ -1,5 +1,6 @@
 package com.example.myapplication.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,8 @@ import com.example.myapplication.databinding.NoteItemBinding
 import com.example.myapplication.enums.DaysCategory
 import com.example.myapplication.interfaces.NoteClickListener
 import com.example.myapplication.model.Note
+import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -19,12 +22,16 @@ class NoteAdapter(private val noteClickListener: NoteClickListener) : RecyclerVi
 
     class NoteHolder(item: View, private var noteClickListener: NoteClickListener) : RecyclerView.ViewHolder(item) {
         var binding = NoteItemBinding.bind(item)
+        @SuppressLint("SimpleDateFormat")
+        var formatter = SimpleDateFormat("dd MMM yyyy HH:mm")
 
         fun bind(note: Note) {
             binding.apply {
                 noteTitle.text = note.name
-                noteDate.text = note.date.toString()
+                noteDate.text = formatter.format(note.date)
                 noteContent.text = note.content
+                bookmark.visibility = View.GONE
+                checkBox.isChecked = note.done
 
                 card.setOnLongClickListener {
                     card.isChecked = !card.isChecked

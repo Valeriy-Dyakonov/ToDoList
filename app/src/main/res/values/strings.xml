@@ -37,4 +37,5 @@
     <string name="week">Week</string>
     <string name="month">Month</string>
     <string name="future">Future</string>
+    <string name="map_view">Map</string>
 </resources>
