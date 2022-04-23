@@ -49,6 +49,7 @@ class NotesListFragment : Fragment(), NoteClickListener {
 
     override fun onNoteClick(note: Note) {
         val intent = Intent(requireContext(), EditActivity::class.java).apply {
+            putExtra("categories", adapter.getCategories())
             putExtra("note", note)
         }
         editLauncher.launch(intent)
@@ -109,7 +110,10 @@ class NotesListFragment : Fragment(), NoteClickListener {
             }
             addNote.setOnClickListener {
                 if (toDeleteList.isEmpty()) {
-                    editLauncher.launch(Intent(requireContext(), EditActivity::class.java))
+                    val intent = Intent(requireContext(), EditActivity::class.java).apply {
+                        putExtra("categories", adapter.getCategories())
+                    }
+                    editLauncher.launch(intent)
                 } else {
                     dbManager.deleteAllById(toDeleteList)
                     adapter.deleteByIds(toDeleteList)

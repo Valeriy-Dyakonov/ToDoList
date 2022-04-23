@@ -14,7 +14,6 @@ import com.example.myapplication.sqlite.DbManager
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
-import kotlin.collections.ArrayList
 
 class NoteAdapter(
     private val noteClickListener: NoteClickListener,
@@ -39,7 +38,8 @@ class NoteAdapter(
                 noteTitle.text = note.name
                 noteDate.text = formatter.format(note.date)
                 noteContent.text = note.content
-                bookmark.visibility = View.GONE
+                bookmark.text = note.category
+                bookmark.visibility = if (note.category != "") View.VISIBLE else View.INVISIBLE
                 checkBox.isChecked = note.done
                 card.isChecked = false
 
@@ -72,6 +72,11 @@ class NoteAdapter(
 
     override fun getItemCount(): Int {
         return noteList.size
+    }
+
+    fun getCategories(): Array<String> {
+        return allNoteList.filter { x -> x.category.isNotEmpty() }.map { x -> x.category }
+            .distinct().toTypedArray()
     }
 
     fun editedNote(note: Note) {

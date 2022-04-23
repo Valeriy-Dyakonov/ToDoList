@@ -3,8 +3,12 @@ package com.example.myapplication.activities
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.widget.addTextChangedListener
+import com.example.myapplication.R
 import com.example.myapplication.databinding.ActivityEditBinding
 import com.example.myapplication.enums.OperationType
 import com.example.myapplication.model.Note
@@ -43,7 +47,7 @@ class EditActivity : AppCompatActivity() {
                     binding.categoryInput.text.toString(),
                     DateUtils.concatDateAndTime(dataText, timeText),
                     binding.contentInput.text.toString(), false
-                );
+                )
                 val addNote = Intent().apply {
                     putExtra("note", note)
                     putExtra("type",type.toString())
@@ -88,6 +92,10 @@ class EditActivity : AppCompatActivity() {
             dateInput.setText(DateUtils.toString(note.date, DateUtils.DATE))
             timeInput.setText(DateUtils.toString(note.date, DateUtils.TIME))
             contentInput.setText(note.content)
+
+            val categories = intent.getStringArrayExtra("categories") as Array<String>
+            val adapter = ArrayAdapter(this@EditActivity, R.layout.list_item, categories)
+            (category.editText as? AutoCompleteTextView)?.setAdapter(adapter)
         }
     }
 
