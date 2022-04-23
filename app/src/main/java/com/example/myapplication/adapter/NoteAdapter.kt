@@ -16,8 +16,8 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 class NoteAdapter(private val noteClickListener: NoteClickListener) : RecyclerView.Adapter<NoteAdapter.NoteHolder>() {
-    private val allNoteList = ArrayList<Note>()
-    private val noteList = ArrayList<Note>()
+    private var allNoteList = ArrayList<Note>()
+    private var noteList = ArrayList<Note>()
     var category: DaysCategory = DaysCategory.TODAY
 
     class NoteHolder(item: View, private var noteClickListener: NoteClickListener) : RecyclerView.ViewHolder(item) {
@@ -56,6 +56,14 @@ class NoteAdapter(private val noteClickListener: NoteClickListener) : RecyclerVi
 
     override fun getItemCount(): Int {
         return noteList.size
+    }
+
+    fun editedNote(note: Note) {
+        noteList = noteList.filter { it.id != note.id } as ArrayList<Note>
+        noteList.add(note)
+        allNoteList = allNoteList.filter { it.id != note.id } as ArrayList<Note>
+        allNoteList.add(note)
+        notifyDataSetChanged()
     }
 
     fun addNote(note: Note) {

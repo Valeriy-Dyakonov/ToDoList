@@ -3,7 +3,7 @@ package com.example.myapplication.sqlite
 object Constants {
     const val TABLE_NAME = "notes"
     const val DB_NAME = "database"
-    const val DB_VERSION = 3
+    const val DB_VERSION = 4
     const val DROP_TABLE = "DROP TABLE IF EXISTS $TABLE_NAME"
     const val ID = "id"
     const val NAME = "name"

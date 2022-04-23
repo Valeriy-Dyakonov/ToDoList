@@ -25,7 +25,7 @@ class NotesListFragment : Fragment(), NoteClickListener {
     private lateinit var binding: FragmentNotesListBinding
     private lateinit var editLauncher: ActivityResultLauncher<Intent>
     private lateinit var adapter: NoteAdapter
-    lateinit var dbManager : DbManager
+    lateinit var dbManager: DbManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,16 +54,23 @@ class NotesListFragment : Fragment(), NoteClickListener {
     private fun initLauncherAndAdapter() {
         adapter = NoteAdapter(this)
         dbManager.openDb()
-        adapter.initNotes(dbManager.fromDb)
+        adapter.initNotes(dbManager.readAll)
         editLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == AppCompatActivity.RESULT_OK) {
                 val type = OperationType.valueOf(it.data?.getSerializableExtra("type").toString())
                 val note = it.data?.getSerializableExtra("note") as Note
                 if (type == OperationType.ADD) {
-                    dbManager.insertToDb(note.name, note.category, DateUtils.toString(note.date, DateUtils.DATE_WITH_TIME), note.content, note.done.toString())
+                    dbManager.insert(
+                        note.name,
+                        note.category,
+                        note.content,
+                        DateUtils.toString(note.date, DateUtils.DATE_WITH_TIME),
+                        note.done.toString()
+                    )
                     adapter.addNote(note)
                 } else if (type == OperationType.EDIT) {
-
+                    dbManager.update(note)
+                    adapter.editedNote(note)
                 }
             }
         }
