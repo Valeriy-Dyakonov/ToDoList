@@ -38,4 +38,13 @@
     <string name="month">Month</string>
     <string name="future">Future</string>
     <string name="map_view">Map</string>
+
+    <string name="create_title">Create new task</string>
+    <string name="name_hint">Name</string>
+    <string name="category_hint">Category</string>
+    <string name="date_hint">DD/MM/YYYY</string>
+    <string name="time_hint">HH:mm</string>
+    <string name="content_hint">Description</string>
+
+    <string name="save_button">Save</string>
 </resources>
