@@ -6,7 +6,6 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import com.example.myapplication.model.Note
 import com.example.myapplication.utils.DateUtils
-import java.text.SimpleDateFormat
 
 class DbManager(context: Context) {
     private val dbHelper: DbHelper = DbHelper(context)
@@ -54,8 +53,8 @@ class DbManager(context: Context) {
                 val date =
                     DateUtils.toDate(cursor.getString(cursor.getColumnIndex(Constants.DATE)), DateUtils.DATE_WITH_TIME)
                 val content = cursor.getString(cursor.getColumnIndex(Constants.CONTENT))
-                val done = cursor.getString(cursor.getColumnIndex(Constants.CONTENT)) == "true"
-                notes.add(Note(id, name, category, date!!, content, done))
+                val done = cursor.getString(cursor.getColumnIndex(Constants.DONE)) == "true"
+                notes.add(Note(id, name, category, date, content, done))
             }
             cursor.close()
             return notes

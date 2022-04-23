@@ -52,7 +52,7 @@ class NotesListFragment : Fragment(), NoteClickListener {
     }
 
     private fun initLauncherAndAdapter() {
-        adapter = NoteAdapter(this)
+        adapter = NoteAdapter(this, dbManager)
         dbManager.openDb()
         adapter.initNotes(dbManager.readAll)
         editLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {

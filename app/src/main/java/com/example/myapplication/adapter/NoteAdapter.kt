@@ -10,17 +10,18 @@ import com.example.myapplication.databinding.NoteItemBinding
 import com.example.myapplication.enums.DaysCategory
 import com.example.myapplication.interfaces.NoteClickListener
 import com.example.myapplication.model.Note
+import com.example.myapplication.sqlite.DbManager
 import java.text.SimpleDateFormat
 import java.time.format.DateTimeFormatter
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class NoteAdapter(private val noteClickListener: NoteClickListener) : RecyclerView.Adapter<NoteAdapter.NoteHolder>() {
+class NoteAdapter(private val noteClickListener: NoteClickListener, var dbManager: DbManager) : RecyclerView.Adapter<NoteAdapter.NoteHolder>() {
     private var allNoteList = ArrayList<Note>()
     private var noteList = ArrayList<Note>()
     var category: DaysCategory = DaysCategory.TODAY
 
-    class NoteHolder(item: View, private var noteClickListener: NoteClickListener) : RecyclerView.ViewHolder(item) {
+    class NoteHolder(item: View, private var noteClickListener: NoteClickListener, var dbManager: DbManager) : RecyclerView.ViewHolder(item) {
         var binding = NoteItemBinding.bind(item)
         @SuppressLint("SimpleDateFormat")
         var formatter = SimpleDateFormat("dd MMM yyyy HH:mm")
@@ -41,13 +42,18 @@ class NoteAdapter(private val noteClickListener: NoteClickListener) : RecyclerVi
                 card.setOnClickListener {
                     noteClickListener.onNoteClick(note)
                 }
+
+                checkBox.setOnClickListener {
+                    note.done = checkBox.isChecked
+                    note.id?.let { x -> dbManager.updateState(x, note.done) }
+                }
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.note_item, parent, false)
-        return NoteHolder(view, noteClickListener)
+        return NoteHolder(view, noteClickListener, dbManager)
     }
 
     override fun onBindViewHolder(holder: NoteHolder, position: Int) {

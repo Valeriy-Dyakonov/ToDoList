@@ -9,7 +9,7 @@ class Note(
     val category: String,
     val date: Date,
     val content: String,
-    val done: Boolean
+    var done: Boolean
 ) : Serializable {
     constructor() : this(null, "", "", Date(), "", false)
 }
