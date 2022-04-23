@@ -1,7 +1,6 @@
 <resources>
-    <string name="app_name">My Application</string>
-    <string name="notes">Notes</string>
-    <string name="calendar">Calendar</string>
+    <string name="app_name">Organizer</string>
+    <string name="notes">Tasks</string>
     <string name="map">Map</string>
     <string name="settings">Settings</string>
     <!-- TODO: Remove or change this placeholder text -->
@@ -30,7 +29,8 @@
     <string name="logout">Logout</string>
     <string name="localization">Localization</string>
 
-    <string name="menu_title_1">Sort by</string>
+    <string name="drawer_menu_title_time">Show by Period</string>
+    <string name="drawer_menu_title_category">Show by Category</string>
     <string name="overdue">Overdue</string>
     <string name="today">Next 24 Hours</string>
     <string name="tomorrow">Coming days</string>

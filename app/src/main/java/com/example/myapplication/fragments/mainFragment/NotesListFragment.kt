@@ -10,6 +10,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.R
@@ -73,6 +74,7 @@ class NotesListFragment : Fragment(), NoteClickListener {
 
     private fun initLauncherAndAdapter() {
         adapter = NoteAdapter(this, dbManager)
+        updateAppBarTitle(adapter.timePeriod.getLabel())
         dbManager.openDb()
         adapter.initNotes(dbManager.readAll)
         editLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -100,11 +102,19 @@ class NotesListFragment : Fragment(), NoteClickListener {
     private fun initListeners() {
         binding.apply {
             topAppBar.setOnClickListener {
+                updateDrawerMenu()
                 drawerLayout.openDrawer(GravityCompat.START)
             }
             navigationView.setNavigationItemSelectedListener {
-                adapter.category = DaysCategory.getByNumber(it.order)!!
-                adapter.updateNotesByCategory()
+                if (it.order > navigationView.menu[0].subMenu.size()) {
+                    adapter.category = it.title.toString()
+                    adapter.updateNotesByCategory()
+                    updateAppBarTitle(it.title.toString())
+                } else {
+                    adapter.timePeriod = DaysCategory.getByNumber(it.order)!!
+                    adapter.updateNotesByTimePeriod()
+                    updateAppBarTitle(adapter.timePeriod.getLabel())
+                }
                 drawerLayout.closeDrawers()
                 true
             }
@@ -120,6 +130,22 @@ class NotesListFragment : Fragment(), NoteClickListener {
                     toDeleteList.clear()
                     updateAddButtonView()
                 }
+            }
+        }
+    }
+
+    private fun updateAppBarTitle(prefix: String) {
+        binding.topAppBar.title = "$prefix Tasks"
+    }
+
+    private fun updateDrawerMenu() {
+        binding.apply {
+            var start = navigationView.menu[0].subMenu.size()
+            val subMenu = navigationView.menu[1].subMenu
+            subMenu.clear()
+            for (category in adapter.getCategories()) {
+                start++
+                subMenu.add(start, start, start, category)
             }
         }
     }

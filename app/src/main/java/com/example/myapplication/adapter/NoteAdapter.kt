@@ -21,7 +21,8 @@ class NoteAdapter(
 ) : RecyclerView.Adapter<NoteAdapter.NoteHolder>() {
     private var allNoteList = ArrayList<Note>()
     private var noteList = ArrayList<Note>()
-    var category: DaysCategory = DaysCategory.TODAY
+    var timePeriod: DaysCategory = DaysCategory.TODAY
+    var category: String = ""
 
     class NoteHolder(
         item: View,
@@ -90,14 +91,22 @@ class NoteAdapter(
     fun addNote(note: Note) {
         noteList.add(note)
         allNoteList.add(note)
-        updateView()
+        timePeriod = DaysCategory.TODAY
+        category = ""
+        updateNotesByTimePeriod()
     }
 
     fun initNotes(notes: ArrayList<Note>) {
         noteList.clear()
         allNoteList.clear()
         allNoteList.addAll(notes)
-        noteList.addAll(getByCategory())
+        noteList.addAll(getByTimePeriod())
+        updateView()
+    }
+
+    fun updateNotesByTimePeriod() {
+        noteList.clear()
+        noteList.addAll(getByTimePeriod())
         updateView()
     }
 
@@ -113,9 +122,9 @@ class NoteAdapter(
         updateView()
     }
 
-    private fun getByCategory(): List<Note> {
+    private fun getByTimePeriod(): List<Note> {
         val date = Date()
-        return when (category) {
+        return when (timePeriod) {
             DaysCategory.OVERDUE -> allNoteList.filter { getDiff(date, it.date) < 0 }
             DaysCategory.TODAY -> allNoteList.filter { getDiff(date, it.date) == 0L }
             DaysCategory.TOMORROW -> allNoteList.filter { getDiff(date, it.date) == 1L }
@@ -123,6 +132,10 @@ class NoteAdapter(
             DaysCategory.MONTH -> allNoteList.filter { getDiff(date, it.date) in 8..31L }
             DaysCategory.FUTURE -> allNoteList.filter { getDiff(date, it.date) > 31L }
         }
+    }
+
+    private fun getByCategory(): List<Note> {
+        return allNoteList.filter { it.category.trim().lowercase() == category.trim().lowercase() }
     }
 
     private fun getDiff(time1: Date, time2: Date): Long {

@@ -5,7 +5,7 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/subtitle1"
-            android:title="@string/menu_title_1">
+            android:title="@string/drawer_menu_title_time">
             <menu>
                 <item
                     android:id="@+id/item1"
@@ -40,18 +40,8 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/subtitle2"
-            android:title="Subtitle 2">
+            android:title="@string/drawer_menu_title_category">
             <menu>
-                <item
-                    android:id="@+id/item7"
-                    android:title="Item 4"
-                    android:orderInCategory="7"/>
-
-                <item
-                    android:id="@+id/item8"
-                    android:title="Item 5"
-                    android:orderInCategory="8"/>
-
             </menu>
         </item>
     </group>
