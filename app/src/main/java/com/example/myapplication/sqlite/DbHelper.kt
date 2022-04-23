@@ -11,7 +11,9 @@ class DbHelper(context: Context?) :
     }
 
     override fun onUpgrade(sqLiteDatabase: SQLiteDatabase, i: Int, i1: Int) {
-        sqLiteDatabase.execSQL(Constants.DROP_TABLE)
-        onCreate(sqLiteDatabase)
+        if (i < i1) {
+            sqLiteDatabase.execSQL(Constants.DROP_TABLE)
+            onCreate(sqLiteDatabase)
+        }
     }
 }

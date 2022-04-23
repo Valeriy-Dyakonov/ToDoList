@@ -45,7 +45,7 @@ class RegisterFragment : Fragment() {
         }
 
         binding.login.addTextChangedListener {
-            if (!binding.login.text.toString().isEmpty()) {
+            if (binding.login.text.toString().isNotEmpty()) {
                 binding.login.error = null
             }
         }

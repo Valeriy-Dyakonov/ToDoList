@@ -15,9 +15,11 @@ import com.example.myapplication.activities.EditActivity
 import com.example.myapplication.adapter.NoteAdapter
 import com.example.myapplication.databinding.FragmentNotesListBinding
 import com.example.myapplication.enums.DaysCategory
+import com.example.myapplication.enums.OperationType
 import com.example.myapplication.interfaces.NoteClickListener
 import com.example.myapplication.model.Note
 import com.example.myapplication.sqlite.DbManager
+import com.example.myapplication.utils.DateUtils
 
 class NotesListFragment : Fragment(), NoteClickListener {
     private lateinit var binding: FragmentNotesListBinding
@@ -55,9 +57,14 @@ class NotesListFragment : Fragment(), NoteClickListener {
         adapter.initNotes(dbManager.fromDb)
         editLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == AppCompatActivity.RESULT_OK) {
+                val type = OperationType.valueOf(it.data?.getSerializableExtra("type").toString())
                 val note = it.data?.getSerializableExtra("note") as Note
-                dbManager.insertToDb(note.name, "", note.content)
-                adapter.addNote(note)
+                if (type == OperationType.ADD) {
+                    dbManager.insertToDb(note.name, note.category, DateUtils.toString(note.date, DateUtils.DATE_WITH_TIME), note.content, note.done.toString())
+                    adapter.addNote(note)
+                } else if (type == OperationType.EDIT) {
+
+                }
             }
         }
 
