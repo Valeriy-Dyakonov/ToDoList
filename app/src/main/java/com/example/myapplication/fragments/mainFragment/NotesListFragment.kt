@@ -17,16 +17,19 @@ import com.example.myapplication.databinding.FragmentNotesListBinding
 import com.example.myapplication.enums.DaysCategory
 import com.example.myapplication.interfaces.NoteClickListener
 import com.example.myapplication.model.Note
+import com.example.myapplication.sqlite.DbManager
 
 class NotesListFragment : Fragment(), NoteClickListener {
     private lateinit var binding: FragmentNotesListBinding
     private lateinit var editLauncher: ActivityResultLauncher<Intent>
     private lateinit var adapter: NoteAdapter
+    lateinit var dbManager : DbManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        dbManager = DbManager(requireContext())
         binding = FragmentNotesListBinding.inflate(inflater)
         initLauncherAndAdapter()
         initRecyclerView()
@@ -48,9 +51,13 @@ class NotesListFragment : Fragment(), NoteClickListener {
 
     private fun initLauncherAndAdapter() {
         adapter = NoteAdapter(this)
+        dbManager.openDb()
+        adapter.initNotes(dbManager.fromDb)
         editLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == AppCompatActivity.RESULT_OK) {
-
+                val note = it.data?.getSerializableExtra("note") as Note
+                dbManager.insertToDb(note.name, "", note.content)
+                adapter.addNote(note)
             }
         }
 
@@ -78,5 +85,10 @@ class NotesListFragment : Fragment(), NoteClickListener {
             noteRcView.layoutManager = LinearLayoutManager(requireContext())
             noteRcView.adapter = adapter
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        dbManager.closeDb()
     }
 }

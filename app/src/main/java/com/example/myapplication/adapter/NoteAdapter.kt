@@ -58,6 +58,12 @@ class NoteAdapter(private val noteClickListener: NoteClickListener) : RecyclerVi
         return noteList.size
     }
 
+    fun addNote(note: Note) {
+        noteList.add(note)
+        allNoteList.add(note)
+        notifyDataSetChanged()
+    }
+
     fun initNotes(notes: ArrayList<Note>) {
         noteList.clear()
         allNoteList.clear()

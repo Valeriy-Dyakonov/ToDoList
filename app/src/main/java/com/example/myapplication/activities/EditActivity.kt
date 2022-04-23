@@ -2,6 +2,7 @@ package com.example.myapplication.activities
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.AttributeSet
 import android.view.View
@@ -12,6 +13,7 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.MaterialTimePicker.INPUT_MODE_KEYBOARD
 import com.google.android.material.timepicker.TimeFormat
+import java.util.*
 
 
 class EditActivity : AppCompatActivity() {
@@ -41,6 +43,18 @@ class EditActivity : AppCompatActivity() {
             titleInput.setText(note?.name ?: "")
             contentInput.setText(note?.content ?: "")
         }
+        initListeners()
         setContentView(binding.root)
+    }
+
+    private fun initListeners() {
+        binding.save.setOnClickListener {
+            val note = Note(binding.titleInput.text.toString(), Date(), binding.contentInput.text.toString(), false);
+            val addNote = Intent().apply {
+                putExtra("note", note)
+            }
+            setResult(RESULT_OK, addNote)
+            finish()
+        }
     }
 }
