@@ -41,6 +41,15 @@ class DbManager(context: Context) {
         db!!.update(Constants.TABLE_NAME, cv, "id = ?", Array(1) { id.toString() })
     }
 
+    fun deleteAllById(noteIds: ArrayList<Int>) {
+        noteIds.forEach { id ->
+            db!!.delete(
+                Constants.TABLE_NAME,
+                "id = ?",
+                Array(1) { id.toString() })
+        }
+    }
+
     val readAll: ArrayList<Note>
         @SuppressLint("Range", "SimpleDateFormat")
         get() {
@@ -51,7 +60,10 @@ class DbManager(context: Context) {
                 val name = cursor.getString(cursor.getColumnIndex(Constants.NAME))
                 val category = cursor.getString(cursor.getColumnIndex(Constants.CATEGORY))
                 val date =
-                    DateUtils.toDate(cursor.getString(cursor.getColumnIndex(Constants.DATE)), DateUtils.DATE_WITH_TIME)
+                    DateUtils.toDate(
+                        cursor.getString(cursor.getColumnIndex(Constants.DATE)),
+                        DateUtils.DATE_WITH_TIME
+                    )
                 val content = cursor.getString(cursor.getColumnIndex(Constants.CONTENT))
                 val done = cursor.getString(cursor.getColumnIndex(Constants.DONE)) == "true"
                 notes.add(Note(id, name, category, date, content, done))

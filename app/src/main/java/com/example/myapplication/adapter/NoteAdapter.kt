@@ -12,17 +12,25 @@ import com.example.myapplication.interfaces.NoteClickListener
 import com.example.myapplication.model.Note
 import com.example.myapplication.sqlite.DbManager
 import java.text.SimpleDateFormat
-import java.time.format.DateTimeFormatter
 import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.collections.ArrayList
 
-class NoteAdapter(private val noteClickListener: NoteClickListener, var dbManager: DbManager) : RecyclerView.Adapter<NoteAdapter.NoteHolder>() {
+class NoteAdapter(
+    private val noteClickListener: NoteClickListener,
+    private var dbManager: DbManager
+) : RecyclerView.Adapter<NoteAdapter.NoteHolder>() {
     private var allNoteList = ArrayList<Note>()
     private var noteList = ArrayList<Note>()
     var category: DaysCategory = DaysCategory.TODAY
 
-    class NoteHolder(item: View, private var noteClickListener: NoteClickListener, var dbManager: DbManager) : RecyclerView.ViewHolder(item) {
-        var binding = NoteItemBinding.bind(item)
+    class NoteHolder(
+        item: View,
+        private var noteClickListener: NoteClickListener,
+        private var dbManager: DbManager
+    ) : RecyclerView.ViewHolder(item) {
+        private var binding = NoteItemBinding.bind(item)
+
         @SuppressLint("SimpleDateFormat")
         var formatter = SimpleDateFormat("dd MMM yyyy HH:mm")
 
@@ -33,9 +41,11 @@ class NoteAdapter(private val noteClickListener: NoteClickListener, var dbManage
                 noteContent.text = note.content
                 bookmark.visibility = View.GONE
                 checkBox.isChecked = note.done
+                card.isChecked = false
 
                 card.setOnLongClickListener {
                     card.isChecked = !card.isChecked
+                    note.id?.let { x -> noteClickListener.onNoteCheckClick(x) }
                     true
                 }
 
@@ -69,13 +79,13 @@ class NoteAdapter(private val noteClickListener: NoteClickListener, var dbManage
         noteList.add(note)
         allNoteList = allNoteList.filter { it.id != note.id } as ArrayList<Note>
         allNoteList.add(note)
-        notifyDataSetChanged()
+        updateView()
     }
 
     fun addNote(note: Note) {
         noteList.add(note)
         allNoteList.add(note)
-        notifyDataSetChanged()
+        updateView()
     }
 
     fun initNotes(notes: ArrayList<Note>) {
@@ -83,13 +93,19 @@ class NoteAdapter(private val noteClickListener: NoteClickListener, var dbManage
         allNoteList.clear()
         allNoteList.addAll(notes)
         noteList.addAll(getByCategory())
-        notifyDataSetChanged()
+        updateView()
     }
 
     fun updateNotesByCategory() {
         noteList.clear()
         noteList.addAll(getByCategory())
-        notifyDataSetChanged()
+        updateView()
+    }
+
+    fun deleteByIds(ids: ArrayList<Int>) {
+        noteList = noteList.filter { !ids.contains(it.id) } as ArrayList<Note>
+        allNoteList = allNoteList.filter { !ids.contains(it.id) } as ArrayList<Note>
+        updateView()
     }
 
     private fun getByCategory(): List<Note> {
@@ -106,5 +122,10 @@ class NoteAdapter(private val noteClickListener: NoteClickListener, var dbManage
 
     private fun getDiff(time1: Date, time2: Date): Long {
         return TimeUnit.DAYS.convert(time2.time - time1.time, TimeUnit.MILLISECONDS)
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun updateView() {
+        notifyDataSetChanged()
     }
 }

@@ -8,9 +8,11 @@ import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.myapplication.R
 import com.example.myapplication.activities.EditActivity
 import com.example.myapplication.adapter.NoteAdapter
 import com.example.myapplication.databinding.FragmentNotesListBinding
@@ -25,7 +27,8 @@ class NotesListFragment : Fragment(), NoteClickListener {
     private lateinit var binding: FragmentNotesListBinding
     private lateinit var editLauncher: ActivityResultLauncher<Intent>
     private lateinit var adapter: NoteAdapter
-    lateinit var dbManager: DbManager
+    private lateinit var dbManager: DbManager
+    private var toDeleteList = ArrayList<Int>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,6 +52,22 @@ class NotesListFragment : Fragment(), NoteClickListener {
             putExtra("note", note)
         }
         editLauncher.launch(intent)
+    }
+
+    override fun onNoteCheckClick(id: Int) {
+        if (toDeleteList.find { x -> x == id } != null) {
+            toDeleteList.remove(id)
+        } else {
+            toDeleteList.add(id)
+        }
+        updateAddButtonView()
+    }
+
+    private fun updateAddButtonView() {
+        binding.addNote.icon = ContextCompat.getDrawable(
+            requireContext(),
+            if (toDeleteList.isEmpty()) R.drawable.ic_add else R.drawable.ic_delete_24
+        )
     }
 
     private fun initLauncherAndAdapter() {
@@ -80,7 +99,7 @@ class NotesListFragment : Fragment(), NoteClickListener {
     private fun initListeners() {
         binding.apply {
             topAppBar.setOnClickListener {
-                drawerLayout.openDrawer(GravityCompat.START);
+                drawerLayout.openDrawer(GravityCompat.START)
             }
             navigationView.setNavigationItemSelectedListener {
                 adapter.category = DaysCategory.getByNumber(it.order)!!
@@ -89,7 +108,14 @@ class NotesListFragment : Fragment(), NoteClickListener {
                 true
             }
             addNote.setOnClickListener {
-                editLauncher.launch(Intent(requireContext(), EditActivity::class.java))
+                if (toDeleteList.isEmpty()) {
+                    editLauncher.launch(Intent(requireContext(), EditActivity::class.java))
+                } else {
+                    dbManager.deleteAllById(toDeleteList)
+                    adapter.deleteByIds(toDeleteList)
+                    toDeleteList.clear()
+                    updateAddButtonView()
+                }
             }
         }
     }
