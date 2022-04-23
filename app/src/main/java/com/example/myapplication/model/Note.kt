@@ -1,6 +1,7 @@
 package com.example.myapplication.model
 
+import java.io.Serializable
 import java.util.*
 
-class Note(val name: String, val date: Date, val content: String) {
+class Note(val name: String, val date: Date, val content: String): Serializable {
 }

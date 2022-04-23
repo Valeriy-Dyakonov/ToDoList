@@ -7,18 +7,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.databinding.NoteItemBinding
 import com.example.myapplication.enums.DaysCategory
+import com.example.myapplication.interfaces.NoteClickListener
 import com.example.myapplication.model.Note
 import java.util.*
 import java.util.concurrent.TimeUnit
-import kotlin.collections.ArrayList
 
-class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteHolder>() {
+class NoteAdapter(private val noteClickListener: NoteClickListener) : RecyclerView.Adapter<NoteAdapter.NoteHolder>() {
     private val allNoteList = ArrayList<Note>()
     private val noteList = ArrayList<Note>()
-    var category: DaysCategory? = DaysCategory.TODAY
+    var category: DaysCategory = DaysCategory.TODAY
 
-    class NoteHolder(item: View) : RecyclerView.ViewHolder(item) {
+    class NoteHolder(item: View, private var noteClickListener: NoteClickListener) : RecyclerView.ViewHolder(item) {
         var binding = NoteItemBinding.bind(item)
+
         fun bind(note: Note) {
             binding.apply {
                 noteTitle.text = note.name
@@ -26,9 +27,12 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteHolder>() {
                 noteContent.text = note.content
 
                 card.setOnLongClickListener {
-                    deleteCardButton.visibility =
-                        if (deleteCardButton.visibility == View.VISIBLE) View.GONE else View.VISIBLE
+                    card.isChecked = !card.isChecked
                     true
+                }
+
+                card.setOnClickListener {
+                    noteClickListener.onNoteClick(note)
                 }
             }
         }
@@ -36,7 +40,7 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.note_item, parent, false)
-        return NoteHolder(view)
+        return NoteHolder(view, noteClickListener)
     }
 
     override fun onBindViewHolder(holder: NoteHolder, position: Int) {
@@ -70,7 +74,6 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteHolder>() {
             DaysCategory.WEEK -> allNoteList.filter { getDiff(date, it.date) in 2..7L }
             DaysCategory.MONTH -> allNoteList.filter { getDiff(date, it.date) in 8..31L }
             DaysCategory.FUTURE -> allNoteList.filter { getDiff(date, it.date) > 31L }
-            null -> allNoteList
         }
     }
 

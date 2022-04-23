@@ -8,7 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="not_active">#9E9E9E</color>
-    <color name="form_color">#DFCDFF</color>
+        <color name="form_color">#DFCDFF</color>
     <color name="primary_color">#222021</color>
     <color name="input_color">#757575</color>
     <color name="sub_primary_color">#353233</color>

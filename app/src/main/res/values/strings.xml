@@ -3,7 +3,7 @@
     <string name="notes">Notes</string>
     <string name="calendar">Calendar</string>
     <string name="map">Map</string>
-    <string name="profile">Profile</string>
+    <string name="settings">Settings</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="notes_list_fragment">Notes List fragment</string>
     <string name="calendar_fragment">Calendar fragment</string>
@@ -23,9 +23,12 @@
     <string name="Login_form_subtitle">Time is money</string>
     <string name="add_note">add_note</string>
     <string name="top_app_bar_title">Notes</string>
+    <string name="top_app_bar_settings_title">Settings</string>
     <string name="important_card">Important_card</string>
     <string name="edit_card">Edit_card</string>
     <string name="delete_card">Delete_card</string>
+    <string name="logout">Logout</string>
+    <string name="localization">Localization</string>
 
     <string name="menu_title_1">Sort by</string>
     <string name="overdue">Overdue</string>

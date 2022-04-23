@@ -84,7 +84,7 @@
             android:backgroundTint="@color/secondary_color"
             android:text="@string/login_form_button"
             android:textAllCaps="false"
-            android:textColor="@color/primary_color"
+            android:textColor="@color/white"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

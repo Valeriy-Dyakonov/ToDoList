@@ -9,7 +9,7 @@
         android:title="@string/map"
         android:orderInCategory="2"/>
     <item android:id="@+id/profile"
-        android:icon="@drawable/profile"
-        android:title="@string/profile"
+        android:icon="@drawable/ic_settings_24"
+        android:title="@string/settings"
         android:orderInCategory="3"/>
 </menu>

@@ -7,7 +7,7 @@ import com.example.myapplication.R
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.example.myapplication.fragments.mainFragment.MapFragment
 import com.example.myapplication.fragments.mainFragment.NotesListFragment
-import com.example.myapplication.fragments.mainFragment.ProfileFragment
+import com.example.myapplication.fragments.mainFragment.SettingsFragment
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.notes -> setFragment(R.id.mainFragmentLayout, NotesListFragment.newInstance())
                 R.id.map -> setFragment(R.id.mainFragmentLayout, MapFragment.newInstance())
-                R.id.profile -> setFragment(R.id.mainFragmentLayout, ProfileFragment.newInstance())
+                R.id.profile -> setFragment(R.id.mainFragmentLayout, SettingsFragment.newInstance())
             }
             true
         }
