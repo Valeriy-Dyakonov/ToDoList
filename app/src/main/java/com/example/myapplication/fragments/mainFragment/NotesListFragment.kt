@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.R
 import com.example.myapplication.activities.EditActivity
@@ -145,7 +146,11 @@ class NotesListFragment : Fragment(), NoteClickListener {
 
     private fun initRecyclerView() {
         binding.apply {
-            noteRcView.layoutManager = LinearLayoutManager(requireContext())
+            noteRcView.layoutManager =
+                if (resources.configuration.orientation == 2) GridLayoutManager(
+                    requireContext(),
+                    2
+                ) else LinearLayoutManager(requireContext())
             noteRcView.adapter = adapter
         }
     }
