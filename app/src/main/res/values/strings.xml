@@ -39,6 +39,7 @@
     <string name="map_view">Map</string>
 
     <string name="create_title">Create new task</string>
+    <string name="edit_title">Edit task</string>
     <string name="name_hint">Name</string>
     <string name="category_hint">Category</string>
     <string name="date_hint">DD/MM/YYYY</string>
@@ -49,4 +50,7 @@
 
     <string name="russian">Russian</string>
     <string name="english">English</string>
+
+    <string name="required">Required</string>
+    <string name="password_error">Passwords are not equals</string>
 </resources>

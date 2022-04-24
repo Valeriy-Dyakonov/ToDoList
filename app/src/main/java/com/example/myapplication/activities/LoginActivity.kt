@@ -1,5 +1,6 @@
 package com.example.myapplication.activities
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -31,7 +32,6 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        LocaleUtils.setAppLocale(this)
         authService = RestApiClient.getAuthService(this)
         accessService = RestApiClient.getAccessService(this)
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -39,6 +39,10 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
         setFragment(R.id.authForm, LoginFragment.newInstance())
         initSubscriptions()
+    }
+
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(newBase?.let { LocaleUtils.attachBaseContext(it) })
     }
 
     private fun initSubscriptions() {

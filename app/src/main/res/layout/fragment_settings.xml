@@ -28,36 +28,13 @@
                 app:title="@string/top_app_bar_settings_title" />
         </com.google.android.material.appbar.AppBarLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            app:boxStrokeColor="@color/color_highlight"
-            app:endIconTint="@color/color_highlight"
-            app:hintTextColor="@color/color_highlight"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
-
-            <AutoCompleteTextView
-                android:id="@+id/localization"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/localization"
-                android:inputType="none"
-                android:textColorHint="#616161" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/logout"
             style="@style/Widget.MaterialComponents.Button"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginStart="65dp"
-            android:layout_marginTop="65dp"
+            android:layout_marginTop="150dp"
             android:layout_marginEnd="65dp"
             android:contentDescription="@string/add_note"
             android:insetTop="0dp"
@@ -68,8 +45,45 @@
             app:backgroundTint="@color/color_highlight"
             app:cornerRadius="16dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/enButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="65dp"
+            android:text="en_EN"
+            android:textAllCaps="false"
+            app:backgroundTint="@color/secondary_color"
+            app:cornerRadius="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/localization" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/ruButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="65dp"
+            android:text="ru_RU"
+            android:textAllCaps="false"
+            app:backgroundTint="@color/secondary_color"
+            app:cornerRadius="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/localization" />
+
+        <TextView
+            android:id="@+id/localization"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="65dp"
+            android:layout_marginTop="30dp"
+            android:text="@string/localization"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

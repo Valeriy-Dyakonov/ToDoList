@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentRegisterBinding
 import com.example.myapplication.model.FormModel
 import com.example.myapplication.model.LoginModel
@@ -54,13 +55,13 @@ class RegisterFragment : Fragment() {
     private fun canRegister(): Boolean {
         binding.apply {
             if (login.text.toString().isEmpty()) {
-                login.error = "Required"
+                login.error = resources.getString(R.string.required)
             }
             if (password.text.toString().isEmpty()) {
-                password.error = "Required"
+                password.error = resources.getString(R.string.required)
             }
             if (repeatPassword.text.toString().isEmpty()) {
-                repeatPassword.error = "Required"
+                repeatPassword.error = resources.getString(R.string.required)
             }
         }
 
@@ -74,8 +75,8 @@ class RegisterFragment : Fragment() {
             if (password.text.toString() != "" && repeatPassword.text.toString() != "" &&
                 repeatPassword.text.toString() != password.text.toString()
             ) {
-                password.error = "Passwords are not equals"
-                repeatPassword.error = "Passwords are not equals"
+                password.error = resources.getString(R.string.password_error)
+                repeatPassword.error = resources.getString(R.string.password_error)
             } else {
                 password.error = null
                 repeatPassword.error = null

@@ -1,5 +1,6 @@
 package com.example.myapplication.activities
 
+import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -15,11 +16,14 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        LocaleUtils.setAppLocale(this)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initBottomNav()
         setFragment(R.id.mainFragmentLayout, NotesListFragment.newInstance())
+    }
+
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(newBase?.let { LocaleUtils.attachBaseContext(it) })
     }
 
     private fun initBottomNav() {

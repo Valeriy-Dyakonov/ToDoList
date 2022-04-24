@@ -41,6 +41,7 @@
     <string name="map_view">Map</string>
 
     <string name="create_title">Создать задание</string>
+    <string name="edit_title">Редактирование</string>
     <string name="name_hint">Название</string>
     <string name="category_hint">Категория</string>
     <string name="date_hint">DD/MM/YYYY</string>
@@ -51,4 +52,7 @@
 
     <string name="russian">Русский</string>
     <string name="english">Английский</string>
+
+    <string name="required">Обязательное поле</string>
+    <string name="password_error">Пароли не совпадают</string>
 </resources>

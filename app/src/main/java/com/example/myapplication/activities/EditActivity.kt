@@ -1,6 +1,7 @@
 package com.example.myapplication.activities
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
@@ -30,12 +31,15 @@ class EditActivity : AppCompatActivity() {
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        LocaleUtils.setAppLocale(this)
         binding = ActivityEditBinding.inflate(layoutInflater)
         initData()
         initPickers()
         initListeners()
         setContentView(binding.root)
+    }
+
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(newBase?.let { LocaleUtils.attachBaseContext(it) })
     }
 
     private fun initListeners() {
@@ -70,7 +74,7 @@ class EditActivity : AppCompatActivity() {
     private fun canSave(): Boolean {
         binding.apply {
             if (titleInput.text.toString().isEmpty()) {
-                titleInput.error = "Required"
+                titleInput.error = resources.getString(R.string.required)
             }
         }
 
@@ -102,7 +106,7 @@ class EditActivity : AppCompatActivity() {
 
     private fun initPickers() {
         binding.apply {
-            formTitle.text = if (type == OperationType.ADD) "Create new task" else "Edit task"
+            formTitle.text = if (type == OperationType.ADD) resources.getString(R.string.create_title) else resources.getString(R.string.edit_title)
             val datePicker =
                 MaterialDatePicker.Builder.datePicker()
                     .setTitleText("Select date")
