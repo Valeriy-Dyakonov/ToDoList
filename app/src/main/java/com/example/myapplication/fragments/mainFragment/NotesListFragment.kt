@@ -82,13 +82,13 @@ class NotesListFragment : Fragment(), NoteClickListener {
                 val type = OperationType.valueOf(it.data?.getSerializableExtra("type").toString())
                 val note = it.data?.getSerializableExtra("note") as Note
                 if (type == OperationType.ADD) {
-                    dbManager.insert(
+                    note.id = dbManager.insert(
                         note.name,
                         note.category,
                         note.content,
                         DateUtils.toString(note.date, DateUtils.DATE_WITH_TIME),
                         note.done.toString()
-                    )
+                    ).toInt()
                     adapter.addNote(note)
                 } else if (type == OperationType.EDIT) {
                     dbManager.update(note)

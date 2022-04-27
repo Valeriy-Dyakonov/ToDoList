@@ -15,14 +15,14 @@ class DbManager(context: Context) {
         db = dbHelper.writableDatabase
     }
 
-    fun insert(name: String?, category: String?, content: String?, date: String?, done: String?) {
+    fun insert(name: String?, category: String?, content: String?, date: String?, done: String?): Long {
         val cv = ContentValues()
         cv.put(Constants.NAME, name)
         cv.put(Constants.CATEGORY, category)
         cv.put(Constants.CONTENT, content)
         cv.put(Constants.DATE, date)
         cv.put(Constants.DONE, done)
-        db!!.insert(Constants.TABLE_NAME, null, cv)
+        return db!!.insert(Constants.TABLE_NAME, null, cv)
     }
 
     fun update(note: Note) {

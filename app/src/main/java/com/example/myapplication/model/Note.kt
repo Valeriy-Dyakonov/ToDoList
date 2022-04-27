@@ -4,7 +4,7 @@ import java.io.Serializable
 import java.util.*
 
 class Note(
-    val id: Int?,
+    var id: Int?,
     val name: String,
     val category: String,
     val date: Date,
