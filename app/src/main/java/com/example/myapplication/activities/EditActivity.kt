@@ -98,7 +98,8 @@ class EditActivity : AppCompatActivity() {
             timeInput.setText(DateUtils.toString(note.date, DateUtils.TIME))
             contentInput.setText(note.content)
 
-            val categories = intent.getStringArrayExtra("categories") as Array<String>
+            val extraCategories = intent.getStringArrayExtra("categories")
+            val categories = if (extraCategories != null) extraCategories as Array<String> else emptyArray()
             val adapter = ArrayAdapter(this@EditActivity, R.layout.list_item, categories)
             (category.editText as? AutoCompleteTextView)?.setAdapter(adapter)
         }
