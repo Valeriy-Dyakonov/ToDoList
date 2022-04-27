@@ -23,7 +23,7 @@ class EditActivityTest {
 
     @Test
     fun test_visibility() {
-            Espresso.onView(ViewMatchers.withId(R.id.formTitle))
+        Espresso.onView(ViewMatchers.withId(R.id.formTitle))
             .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
 
         Espresso.onView(ViewMatchers.withId(R.id.title))
