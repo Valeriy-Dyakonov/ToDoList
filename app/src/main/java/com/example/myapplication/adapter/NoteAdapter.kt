@@ -125,7 +125,7 @@ class NoteAdapter(
     private fun getByTimePeriod(): List<Task> {
         val date = Date()
         return when (timePeriod) {
-            DaysCategory.OVERDUE -> allNoteList.filter { getDiff(date, it.date) < 0 }
+            DaysCategory.OVERDUE -> allNoteList.filter { getDiff(date, it.date) < 0 && !it.done }
             DaysCategory.TODAY -> allNoteList.filter { getDiff(date, it.date) == 0L }
             DaysCategory.TOMORROW -> allNoteList.filter { getDiff(date, it.date) == 1L }
             DaysCategory.WEEK -> allNoteList.filter { getDiff(date, it.date) in 2..7L }
