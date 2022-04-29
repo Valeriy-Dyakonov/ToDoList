@@ -9,7 +9,7 @@ import com.example.myapplication.R
 import com.example.myapplication.databinding.NoteItemBinding
 import com.example.myapplication.enums.DaysCategory
 import com.example.myapplication.interfaces.NoteClickListener
-import com.example.myapplication.model.Note
+import com.example.myapplication.model.Task
 import com.example.myapplication.sqlite.DbManager
 import java.text.SimpleDateFormat
 import java.util.*
@@ -19,8 +19,8 @@ class NoteAdapter(
     private val noteClickListener: NoteClickListener,
     private var dbManager: DbManager
 ) : RecyclerView.Adapter<NoteAdapter.NoteHolder>() {
-    private var allNoteList = ArrayList<Note>()
-    private var noteList = ArrayList<Note>()
+    private var allNoteList = ArrayList<Task>()
+    private var noteList = ArrayList<Task>()
     var timePeriod: DaysCategory = DaysCategory.TODAY
     var category: String = ""
 
@@ -34,29 +34,29 @@ class NoteAdapter(
         @SuppressLint("SimpleDateFormat")
         var formatter = SimpleDateFormat("dd MMM yyyy HH:mm")
 
-        fun bind(note: Note) {
+        fun bind(task: Task) {
             binding.apply {
-                noteTitle.text = note.name
-                noteDate.text = formatter.format(note.date)
-                noteContent.text = note.content
-                bookmark.text = note.category
-                bookmark.visibility = if (note.category != "") View.VISIBLE else View.INVISIBLE
-                checkBox.isChecked = note.done
+                noteTitle.text = task.name
+                noteDate.text = formatter.format(task.date)
+                noteContent.text = task.content
+                bookmark.text = task.category
+                bookmark.visibility = if (task.category != "") View.VISIBLE else View.INVISIBLE
+                checkBox.isChecked = task.done
                 card.isChecked = false
 
                 card.setOnLongClickListener {
                     card.isChecked = !card.isChecked
-                    note.id?.let { x -> noteClickListener.onNoteCheckClick(x) }
+                    task.id?.let { x -> noteClickListener.onNoteCheckClick(x) }
                     true
                 }
 
                 card.setOnClickListener {
-                    noteClickListener.onNoteClick(note)
+                    noteClickListener.onNoteClick(task)
                 }
 
                 checkBox.setOnClickListener {
-                    note.done = checkBox.isChecked
-                    note.id?.let { x -> dbManager.updateState(x, note.done) }
+                    task.done = checkBox.isChecked
+                    task.id?.let { x -> dbManager.updateState(x, task.done) }
                 }
             }
         }
@@ -80,26 +80,26 @@ class NoteAdapter(
             .distinct().toTypedArray()
     }
 
-    fun editedNote(note: Note) {
-        noteList = noteList.filter { it.id != note.id } as ArrayList<Note>
-        noteList.add(note)
-        allNoteList = allNoteList.filter { it.id != note.id } as ArrayList<Note>
-        allNoteList.add(note)
+    fun editedNote(task: Task) {
+        noteList = noteList.filter { it.id != task.id } as ArrayList<Task>
+        noteList.add(task)
+        allNoteList = allNoteList.filter { it.id != task.id } as ArrayList<Task>
+        allNoteList.add(task)
         updateView()
     }
 
-    fun addNote(note: Note) {
-        noteList.add(note)
-        allNoteList.add(note)
+    fun addNote(task: Task) {
+        noteList.add(task)
+        allNoteList.add(task)
         timePeriod = DaysCategory.TODAY
         category = ""
         updateNotesByTimePeriod()
     }
 
-    fun initNotes(notes: ArrayList<Note>) {
+    fun initNotes(tasks: ArrayList<Task>) {
         noteList.clear()
         allNoteList.clear()
-        allNoteList.addAll(notes)
+        allNoteList.addAll(tasks)
         noteList.addAll(getByTimePeriod())
         updateView()
     }
@@ -117,12 +117,12 @@ class NoteAdapter(
     }
 
     fun deleteByIds(ids: ArrayList<Int>) {
-        noteList = noteList.filter { !ids.contains(it.id) } as ArrayList<Note>
-        allNoteList = allNoteList.filter { !ids.contains(it.id) } as ArrayList<Note>
+        noteList = noteList.filter { !ids.contains(it.id) } as ArrayList<Task>
+        allNoteList = allNoteList.filter { !ids.contains(it.id) } as ArrayList<Task>
         updateView()
     }
 
-    private fun getByTimePeriod(): List<Note> {
+    private fun getByTimePeriod(): List<Task> {
         val date = Date()
         return when (timePeriod) {
             DaysCategory.OVERDUE -> allNoteList.filter { getDiff(date, it.date) < 0 }
@@ -134,7 +134,7 @@ class NoteAdapter(
         }
     }
 
-    private fun getByCategory(): List<Note> {
+    private fun getByCategory(): List<Task> {
         return allNoteList.filter { it.category.trim().lowercase() == category.trim().lowercase() }
     }
 

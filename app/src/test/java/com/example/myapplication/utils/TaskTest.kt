@@ -1,14 +1,14 @@
 package com.example.myapplication.utils
 
-import com.example.myapplication.model.Note
+import com.example.myapplication.model.Task
 import org.junit.Test
 import org.junit.jupiter.api.Assertions
 import java.util.*
 
-class NoteTest {
+class TaskTest {
     @Test
     fun testConstructor() {
-        val note = Note(
+        val note = Task(
             1,
             "name",
             "category",
@@ -18,7 +18,7 @@ class NoteTest {
         )
         Assertions.assertTrue(note.done)
 
-        val note_2 = Note()
+        val note_2 = Task()
         Assertions.assertFalse(note_2.done)
     }
 }

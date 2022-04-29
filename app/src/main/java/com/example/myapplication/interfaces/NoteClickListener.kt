@@ -1,8 +1,8 @@
 package com.example.myapplication.interfaces
 
-import com.example.myapplication.model.Note
+import com.example.myapplication.model.Task
 
 interface NoteClickListener {
-    fun onNoteClick(note: Note)
+    fun onNoteClick(task: Task)
     fun onNoteCheckClick(id: Int)
 }

@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
-import com.example.myapplication.model.Note
+import com.example.myapplication.model.Task
 import com.example.myapplication.utils.DateUtils
 
 class DbManager(context: Context) {
@@ -25,14 +25,14 @@ class DbManager(context: Context) {
         return db!!.insert(Constants.TABLE_NAME, null, cv)
     }
 
-    fun update(note: Note) {
+    fun update(task: Task) {
         val cv = ContentValues()
-        cv.put(Constants.NAME, note.name)
-        cv.put(Constants.CATEGORY, note.category)
-        cv.put(Constants.CONTENT, note.content)
-        cv.put(Constants.DATE, DateUtils.toString(note.date, DateUtils.DATE_WITH_TIME))
-        cv.put(Constants.DONE, note.done.toString())
-        db!!.update(Constants.TABLE_NAME, cv, "id = ?", Array(1) { note.id.toString() })
+        cv.put(Constants.NAME, task.name)
+        cv.put(Constants.CATEGORY, task.category)
+        cv.put(Constants.CONTENT, task.content)
+        cv.put(Constants.DATE, DateUtils.toString(task.date, DateUtils.DATE_WITH_TIME))
+        cv.put(Constants.DONE, task.done.toString())
+        db!!.update(Constants.TABLE_NAME, cv, "id = ?", Array(1) { task.id.toString() })
     }
 
     fun updateState(id: Int, state: Boolean) {
@@ -50,10 +50,10 @@ class DbManager(context: Context) {
         }
     }
 
-    val readAll: ArrayList<Note>
+    val readAll: ArrayList<Task>
         @SuppressLint("Range", "SimpleDateFormat")
         get() {
-            val notes: ArrayList<Note> = ArrayList()
+            val tasks: ArrayList<Task> = ArrayList()
             val cursor = db!!.query(Constants.TABLE_NAME, null, null, null, null, null, null)
             while (cursor.moveToNext()) {
                 val id = cursor.getInt(cursor.getColumnIndex(Constants.ID))
@@ -66,10 +66,10 @@ class DbManager(context: Context) {
                     )
                 val content = cursor.getString(cursor.getColumnIndex(Constants.CONTENT))
                 val done = cursor.getString(cursor.getColumnIndex(Constants.DONE)) == "true"
-                notes.add(Note(id, name, category, date, content, done))
+                tasks.add(Task(id, name, category, date, content, done))
             }
             cursor.close()
-            return notes
+            return tasks
         }
 
     fun closeDb() {

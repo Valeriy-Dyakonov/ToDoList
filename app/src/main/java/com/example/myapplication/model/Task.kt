@@ -3,7 +3,7 @@ package com.example.myapplication.model
 import java.io.Serializable
 import java.util.*
 
-class Note(
+class Task(
     var id: Int?,
     val name: String,
     val category: String,

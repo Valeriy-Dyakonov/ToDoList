@@ -11,7 +11,7 @@ import androidx.core.widget.addTextChangedListener
 import com.example.myapplication.R
 import com.example.myapplication.databinding.ActivityEditBinding
 import com.example.myapplication.enums.OperationType
-import com.example.myapplication.model.Note
+import com.example.myapplication.model.Task
 import com.example.myapplication.utils.DateUtils
 import com.example.myapplication.utils.LocaleUtils
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -23,7 +23,7 @@ import java.util.*
 
 class EditActivity : AppCompatActivity() {
     lateinit var binding: ActivityEditBinding
-    private lateinit var note: Note
+    private lateinit var task: Task
     private lateinit var type: OperationType
     private var dataText: String = ""
     private var timeText: String = ""
@@ -46,8 +46,8 @@ class EditActivity : AppCompatActivity() {
         val type = type
         binding.save.setOnClickListener {
             if (canSave()) {
-                val note = Note(
-                    note.id,
+                val note = Task(
+                    task.id,
                     binding.titleInput.text.toString(),
                     binding.categoryInput.text.toString(),
                     DateUtils.concatDateAndTime(dataText, timeText),
@@ -83,20 +83,20 @@ class EditActivity : AppCompatActivity() {
 
     private fun initData() {
         if (intent.hasExtra("note")) {
-            note = intent.getSerializableExtra("note") as Note
+            task = intent.getSerializableExtra("note") as Task
             type = OperationType.EDIT
         } else {
-            note = Note()
+            task = Task()
             type = OperationType.ADD
         }
-        dataText = DateUtils.toString(note.date, DateUtils.DATE)
-        timeText = DateUtils.toString(note.date, DateUtils.TIME)
+        dataText = DateUtils.toString(task.date, DateUtils.DATE)
+        timeText = DateUtils.toString(task.date, DateUtils.TIME)
         binding.apply {
-            titleInput.setText(note.name)
-            categoryInput.setText(note.category)
-            dateInput.setText(DateUtils.toString(note.date, DateUtils.DATE))
-            timeInput.setText(DateUtils.toString(note.date, DateUtils.TIME))
-            contentInput.setText(note.content)
+            titleInput.setText(task.name)
+            categoryInput.setText(task.category)
+            dateInput.setText(DateUtils.toString(task.date, DateUtils.DATE))
+            timeInput.setText(DateUtils.toString(task.date, DateUtils.TIME))
+            contentInput.setText(task.content)
 
             val extraCategories = intent.getStringArrayExtra("categories")
             val categories = if (extraCategories != null) extraCategories as Array<String> else emptyArray()

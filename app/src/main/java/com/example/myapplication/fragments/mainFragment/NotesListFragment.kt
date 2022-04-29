@@ -21,7 +21,7 @@ import com.example.myapplication.databinding.FragmentNotesListBinding
 import com.example.myapplication.enums.DaysCategory
 import com.example.myapplication.enums.OperationType
 import com.example.myapplication.interfaces.NoteClickListener
-import com.example.myapplication.model.Note
+import com.example.myapplication.model.Task
 import com.example.myapplication.sqlite.DbManager
 import com.example.myapplication.utils.DateUtils
 
@@ -49,10 +49,10 @@ class NotesListFragment : Fragment(), NoteClickListener {
         fun newInstance() = NotesListFragment()
     }
 
-    override fun onNoteClick(note: Note) {
+    override fun onNoteClick(task: Task) {
         val intent = Intent(requireContext(), EditActivity::class.java).apply {
             putExtra("categories", adapter.getCategories())
-            putExtra("note", note)
+            putExtra("note", task)
         }
         editLauncher.launch(intent)
     }
@@ -80,7 +80,7 @@ class NotesListFragment : Fragment(), NoteClickListener {
         editLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == AppCompatActivity.RESULT_OK) {
                 val type = OperationType.valueOf(it.data?.getSerializableExtra("type").toString())
-                val note = it.data?.getSerializableExtra("note") as Note
+                val note = it.data?.getSerializableExtra("note") as Task
                 if (type == OperationType.ADD) {
                     note.id = dbManager.insert(
                         note.name,

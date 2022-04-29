@@ -11,18 +11,22 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentMapBinding
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.Polyline
 import com.google.android.gms.maps.model.PolylineOptions
+
 
 class MapFragment : Fragment(), OnMapReadyCallback {
     private lateinit var map: MapView
     private lateinit var binding: FragmentMapBinding
     private lateinit var gMap: GoogleMap
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private var points = ArrayList<LatLng>()
     private var polyline: Polyline? = null
 
@@ -41,6 +45,12 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     companion object {
         @JvmStatic
         fun newInstance() = MapFragment()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        fusedLocationProviderClient =
+            LocationServices.getFusedLocationProviderClient(requireContext())
     }
 
     private fun initListeners() {
@@ -85,13 +95,27 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-        if (ActivityCompat.checkSelfPermission(requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(requireActivity(),
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1
+            )
             return
         }
         googleMap.isMyLocationEnabled = true
+        fusedLocationProviderClient.lastLocation.addOnCompleteListener(requireActivity()) { task ->
+            task.result?.let {
+                googleMap.animateCamera(
+                    CameraUpdateFactory.newLatLngZoom(
+                        LatLng(it.latitude, it.longitude), 15F
+                    )
+                )
+            }
+        }
         googleMap.setOnMapLongClickListener {
             points.add(it)
             polyline?.remove()
