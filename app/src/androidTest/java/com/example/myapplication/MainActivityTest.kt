@@ -39,6 +39,7 @@ class MainActivityTest {
         Espresso.onView(ViewMatchers.withId(R.id.addNote))
             .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
 
+
         Espresso.onView(ViewMatchers.withId(R.id.noteRcView))
             .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
     }
